@@ -1,0 +1,25 @@
+{
+  "name": "webpack2_config",
+  "version": "1.0.0",
+  "description": "Initial webpack config for new projects",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jeggett/webpack-initial.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "Alexander Zaytsev",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.8.0"
+  }
+}
