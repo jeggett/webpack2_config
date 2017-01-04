@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "keywords": [
     "webpack"
@@ -16,12 +16,15 @@
   "author": "Alexander Zaytsev",
   "license": "ISC",
   "devDependencies": {
+    "case-sensitive-paths-webpack-plugin": "^1.1.4",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.8.0",
+    "friendly-errors-webpack-plugin": "^1.1.2",
     "html-webpack-plugin": "^2.25.0",
+    "html-webpack-template": "^6.0.0",
     "webpack": "^2.2.0-rc.3"
   }
 }
