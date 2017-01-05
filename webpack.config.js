@@ -1,7 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const merge = require('webpack-merge');
+
+const parts = require('./webpack.parts');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -29,6 +33,21 @@ const common = merge (
 );
 
 module.exports = function (env) {
-  console.log(env)
-  return merge(common);
+  return merge(
+    common,
+    {
+      // Disable performance hints during development
+      performance: {
+        hints: false
+      },
+      plugins: [
+        new webpack.NamedModulesPlugin()
+      ]
+    },
+    parts.devServer({
+      // Customize host/port here if needed
+      host: process.env.HOST,
+      port: process.env.PORT
+    })
+  );
 };

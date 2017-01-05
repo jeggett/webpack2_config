@@ -8,6 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --env development",
     "build": "webpack --env production"
   },
   "keywords": [
@@ -26,6 +27,7 @@
     "html-webpack-plugin": "^2.25.0",
     "html-webpack-template": "^6.0.0",
     "webpack": "^2.2.0-rc.3",
+    "webpack-dev-server": "^2.2.0-rc.0",
     "webpack-merge": "^2.0.0"
   }
 }
