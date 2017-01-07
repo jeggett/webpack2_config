@@ -29,7 +29,8 @@ const common = merge (
       }),
       new CaseSensitivePathsPlugin(),
     ],
-  }
+  },
+  parts.lintJavaScript(PATHS.app)
 );
 
 module.exports = function (env) {

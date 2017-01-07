@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test:lint": "eslint . --cache",
+    "test:lint": "eslint . --cache --format 'node_modules/eslint-friendly-formatter'",
     "start": "webpack-dev-server --env development",
     "build": "webpack --env production"
   },
@@ -19,10 +19,12 @@
   "license": "ISC",
   "devDependencies": {
     "case-sensitive-paths-webpack-plugin": "^1.1.4",
-    "eslint": "^3.12.2",
+    "eslint": "^3.13.0",
     "eslint-config-airbnb": "^13.0.0",
+    "eslint-friendly-formatter": "^2.0.7",
+    "eslint-loader": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "friendly-errors-webpack-plugin": "^1.1.2",
     "html-webpack-plugin": "^2.25.0",
