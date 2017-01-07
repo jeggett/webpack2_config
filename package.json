@@ -1,36 +1,39 @@
 {
-  "name": "webpack2_config",
-  "version": "1.0.0",
-  "description": "Initial webpack config for new projects",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jeggett/webpack-initial.git"
-  },
-  "main": "index.js",
-  "scripts": {
-    "test:lint": "eslint . --cache --format 'node_modules/eslint-friendly-formatter'",
-    "start": "webpack-dev-server --env development",
-    "build": "webpack --env production"
-  },
-  "keywords": [
-    "webpack"
-  ],
-  "author": "Alexander Zaytsev",
-  "license": "ISC",
-  "devDependencies": {
-    "case-sensitive-paths-webpack-plugin": "^1.1.4",
-    "eslint": "^3.13.0",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-friendly-formatter": "^2.0.7",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.8.0",
-    "friendly-errors-webpack-plugin": "^1.1.2",
-    "html-webpack-plugin": "^2.25.0",
-    "html-webpack-template": "^6.0.0",
-    "webpack": "^2.2.0-rc.3",
-    "webpack-dev-server": "^2.2.0-rc.0",
-    "webpack-merge": "^2.0.0"
-  }
+    "name": "webpack2_config",
+    "version": "1.0.0",
+    "description": "Initial webpack config for new projects",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/jeggett/webpack-initial.git"
+    },
+    "main": "index.js",
+    "scripts": {
+        "precommit": "npm run test:lint",
+        "prepush": "npm run test:lint",
+        "test:lint": "eslint . --cache --format 'node_modules/eslint-friendly-formatter'",
+        "start": "webpack-dev-server --env development",
+        "build": "webpack --env production"
+    },
+    "keywords": [
+        "webpack"
+    ],
+    "author": "Alexander Zaytsev",
+    "license": "ISC",
+    "devDependencies": {
+        "case-sensitive-paths-webpack-plugin": "^1.1.4",
+        "eslint": "^3.13.0",
+        "eslint-config-airbnb": "^13.0.0",
+        "eslint-friendly-formatter": "^2.0.7",
+        "eslint-loader": "^1.6.1",
+        "eslint-plugin-import": "^2.2.0",
+        "eslint-plugin-jsx-a11y": "^2.2.3",
+        "eslint-plugin-react": "^6.8.0",
+        "friendly-errors-webpack-plugin": "^1.1.2",
+        "html-webpack-plugin": "^2.25.0",
+        "html-webpack-template": "^6.0.0",
+        "husky": "^0.12.0",
+        "webpack": "^2.2.0-rc.3",
+        "webpack-dev-server": "^2.2.0-rc.0",
+        "webpack-merge": "^2.0.0"
+    }
 }

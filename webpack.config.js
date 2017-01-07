@@ -1,9 +1,11 @@
 const path = require('path');
-const webpack = require('webpack');
 
+/* eslint-disable import/no-extraneous-dependencies */
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const merge = require('webpack-merge');
+/* eslint-enable import/no-extraneous-dependencies */
 
 const parts = require('./webpack.parts');
 
@@ -12,7 +14,7 @@ const PATHS = {
   build: path.join(__dirname, 'build'),
 };
 
-const common = merge (
+const common = merge(
   {
     entry: {
       app: PATHS.app,
@@ -30,25 +32,25 @@ const common = merge (
       new CaseSensitivePathsPlugin(),
     ],
   },
-  parts.lintJavaScript(PATHS.app)
+  parts.lintJavaScript(PATHS.app),
 );
 
-module.exports = function (env) {
+module.exports = function config(env) { // eslint-disable-line no-unused-vars
   return merge(
     common,
     {
       // Disable performance hints during development
       performance: {
-        hints: false
+        hints: false,
       },
       plugins: [
-        new webpack.NamedModulesPlugin()
-      ]
+        new webpack.NamedModulesPlugin(),
+      ],
     },
     parts.devServer({
       // Customize host/port here if needed
       host: process.env.HOST,
-      port: process.env.PORT
-    })
+      port: process.env.PORT,
+    }),
   );
 };

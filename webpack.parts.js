@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
+/* eslint-enable import/no-extraneous-dependencies */
 
-exports.devServer = function (options) {
+exports.devServer = function devServer(options) {
   return {
     devServer: {
       // Enable history API fallback so HTML5 History API based
@@ -20,7 +22,7 @@ exports.devServer = function (options) {
 
       // Parse host and port from env to allow customization
       host: options.host, // Default to localhost
-      port: options.port // Default to 8080
+      port: options.port, // Default to 8080
     },
     plugins: [
       // Enable multi-pass compilation for enhanced performance
@@ -28,12 +30,12 @@ exports.devServer = function (options) {
       new webpack.HotModuleReplacementPlugin({
         // Disabled as this won't work with html-webpack-template yet
         // multiStep: true
-      })
-    ]
-  }
+      }),
+    ],
+  };
 };
 
-exports.lintJavaScript = function (paths) {
+exports.lintJavaScript = function lintJavaScript(paths) {
   return {
     module: {
       rules: [
@@ -41,9 +43,9 @@ exports.lintJavaScript = function (paths) {
           test: /\.js$/,
           include: paths,
           use: 'eslint-loader',
-          enforce: 'pre'
-        }
-      ]
-    }
-  }
+          enforce: 'pre',
+        },
+      ],
+    },
+  };
 };
