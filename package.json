@@ -8,6 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "test:lint": "eslint . --cache",
     "start": "webpack-dev-server --env development",
     "build": "webpack --env production"
   },
