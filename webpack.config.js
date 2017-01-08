@@ -32,8 +32,7 @@ const common = merge(
       new CaseSensitivePathsPlugin(),
     ],
   },
-  parts.lintJavaScript(PATHS.app),
-);
+  parts.lintJavaScript(PATHS.app));
 
 module.exports = function config(env) { // eslint-disable-line no-unused-vars
   return merge(
@@ -51,6 +50,5 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       // Customize host/port here if needed
       host: process.env.HOST,
       port: process.env.PORT,
-    }),
-  );
+    }));
 };
