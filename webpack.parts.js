@@ -134,3 +134,18 @@ exports.purifyCSS = function purifyCSS(paths) {
     ],
   };
 };
+
+exports.lintCSS = function lintCSS(paths) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.(scss|css)/,
+          include: paths,
+          use: 'postcss-loader',
+          enforce: 'pre',
+        },
+      ],
+    },
+  };
+};

@@ -36,6 +36,7 @@ const common = merge(
       new CaseSensitivePathsPlugin(),
     ],
   },
+  parts.lintCSS(PATHS.app),
   parts.lintJavaScript(PATHS.app));
 
 module.exports = function config(env) { // eslint-disable-line no-unused-vars
