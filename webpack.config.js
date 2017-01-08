@@ -1,6 +1,7 @@
-const path = require('path');
-
 /* eslint-disable import/no-extraneous-dependencies */
+const path = require('path');
+const glob = require('glob');
+
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -12,12 +13,14 @@ const parts = require('./webpack.parts');
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build'),
+  style: path.join(__dirname, glob.sync('app/**/*.css')[0]),
 };
 
 const common = merge(
   {
     entry: {
       app: PATHS.app,
+      style: PATHS.style,
     },
     output: {
       path: PATHS.build,
@@ -35,6 +38,12 @@ const common = merge(
   parts.lintJavaScript(PATHS.app));
 
 module.exports = function config(env) { // eslint-disable-line no-unused-vars
+  if (env === 'production') {
+    return merge(
+      common,
+      parts.extractCSS());
+  }
+
   return merge(
     common,
     {
@@ -46,6 +55,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
         new webpack.NamedModulesPlugin(),
       ],
     },
+    parts.loadCSS(),
     parts.devServer({
       // Customize host/port here if needed
       host: process.env.HOST,

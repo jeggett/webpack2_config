@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 /* eslint-enable import/no-extraneous-dependencies */
 
 exports.devServer = function devServer(options) {
@@ -47,5 +48,41 @@ exports.lintJavaScript = function lintJavaScript(paths) {
         },
       ],
     },
+  };
+};
+
+exports.loadCSS = function loadCSS(paths) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+          include: paths,
+        },
+      ],
+    },
+  };
+};
+
+exports.extractCSS = function extractCSS(paths) {
+  return {
+    module: {
+      rules: [
+        // Extract CSS during build
+        {
+          test: /\.css$/,
+          include: paths,
+          loader: ExtractTextPlugin.extract({
+            fallbackLoader: 'style-loader',
+            loader: 'css-loader',
+          }),
+        },
+      ],
+    },
+    plugins: [
+      // Output extracted CSS to a file
+      new ExtractTextPlugin('[name].css'),
+    ],
   };
 };
