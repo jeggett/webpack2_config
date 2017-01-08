@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-const glob = require('glob');
+// const glob = require('glob');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,14 +13,15 @@ const parts = require('./webpack.parts');
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build'),
-  style: path.join(__dirname, glob.sync('app/**/*.css')[0]),
+  // The other way is use import './main.scss' from index.js
+  // style: glob.sync('./app/**/*.scss'),
 };
 
 const common = merge(
   {
     entry: {
       app: PATHS.app,
-      style: PATHS.style,
+      // style: PATHS.style,
     },
     output: {
       path: PATHS.build,
@@ -41,7 +42,8 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
     return merge(
       common,
-      parts.extractCSS());
+      parts.extractCSS(),
+      parts.purifyCSS(PATHS.app));
   }
 
   return merge(
