@@ -1,8 +1,16 @@
+import src from './static/images/images.png';
+
 export default function () {
-  const element = document.createElement('h1');
+  const img = document.createElement('img');
+  img.src = src;
 
-  element.className = 'pure-button';
-  element.innerHTML = 'Hello World!';
+  const btn = document.createElement('span');
+  btn.className = 'pure-button';
+  btn.innerHTML = 'Hello';
 
-  return element;
+  const div = document.createElement('div');
+  div.appendChild(img);
+  div.appendChild(btn);
+
+  return div;
 }

@@ -14,14 +14,14 @@ const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build'),
   // The other way is use import './main.scss' from index.js
-  // style: glob.sync('./app/**/*.scss'),
+  images: path.join(__dirname, 'app', 'static', 'images'),
 };
 
 const common = merge(
   {
     entry: {
       app: PATHS.app,
-      // style: PATHS.style,
+      // images: PATHS.images,
     },
     output: {
       path: PATHS.build,
@@ -37,7 +37,8 @@ const common = merge(
     ],
   },
   parts.lintCSS(PATHS.app),
-  parts.lintJavaScript(PATHS.app));
+  parts.lintJavaScript(PATHS.app),
+  parts.loadImages(PATHS.images));
 
 module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {

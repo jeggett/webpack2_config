@@ -57,14 +57,14 @@ exports.loadCSS = function loadCSS(paths) {
     module: {
       rules: [
         {
-          test: /\.(scss|sass)$/,
+          test: /\.(scss|sass|css)$/,
           // Third style-loader deals with `require` statements
           // in our JavaScript.
           use: ['style-loader'],
           include: paths,
         },
         {
-          test: /\.(scss|sass)$/,
+          test: /\.(scss|sass|css)$/,
           // Second css-loader will resolve `@import` and `url` statements
           // in CSS files.
           use: ['css-loader'],
@@ -145,6 +145,48 @@ exports.lintCSS = function lintCSS(paths) {
           use: 'postcss-loader',
           enforce: 'pre',
         },
+      ],
+    },
+  };
+};
+
+exports.loadImages = function loadImages(paths) {
+  return {
+    module: {
+      rules: [
+        // {
+        //   test: /\.(jpe?g|png|svg)$/,
+        //   loader: 'file-loader',
+        //   include: paths,
+        //   options: {
+        //     name: '[name].[ext]',
+        //   },
+        // },
+        {
+          test: /\.(jpe?g|png|svg)$/,
+          loader: 'url-loader',
+          include: paths,
+          options: {
+            limit: 3000,
+            name: './images/[name][hash].[ext]',
+          },
+        },
+        {
+          test: /\.(jpe?g|png|svg)$/,
+          loader: 'image-webpack-loader',
+          include: paths,
+          // TODO configure rules later
+          options: {
+            progressive: true,
+            optimizationLevel: 8,
+            interlaced: false,
+            pngquant: {
+              quality: '65-90',
+              speed: 3,
+            },
+          },
+        },
+        // TODO add resize-image-loader and responsive-loader for srcset
       ],
     },
   };
