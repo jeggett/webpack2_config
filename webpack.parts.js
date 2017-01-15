@@ -191,3 +191,31 @@ exports.loadImages = function loadImages(paths) {
     },
   };
 };
+
+exports.loadFonts = function loadFonts(options) {
+  const name = (options && options.name) || 'fonts/[hash].[ext]';
+  const limit = (options && options.limit) || 50000;
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.(ttf|svg|eot)$/,
+          loader: 'file-loader',
+          options: {
+            name,
+          },
+        },
+        {
+          test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'url-loader',
+          options: {
+            name,
+            limit, // If font is less than limit, embed it to bundle.
+            mimetype: 'application/font-woff',
+          },
+        },
+      ],
+    },
+  };
+};
+

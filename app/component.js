@@ -5,7 +5,7 @@ export default function () {
   img.src = src;
 
   const btn = document.createElement('span');
-  btn.className = 'pure-button';
+  btn.className = 'pure-button fa fa-bell fa-1g';
   btn.innerHTML = 'Hello';
 
   const div = document.createElement('div');

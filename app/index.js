@@ -1,5 +1,6 @@
 import 'purecss';
 import './main.scss';
+import '../node_modules/font-awesome/css/font-awesome.css';
 import component from './component';
 
 let demoComponent = component();

@@ -38,7 +38,9 @@ const common = merge(
   },
   parts.lintCSS(PATHS.app),
   parts.lintJavaScript(PATHS.app),
-  parts.loadImages(PATHS.images));
+  parts.loadImages(PATHS.images),
+  parts.loadFonts() // eslint-disable-line
+);
 
 module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
