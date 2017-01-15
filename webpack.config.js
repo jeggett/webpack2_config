@@ -26,6 +26,9 @@ const common = merge(
     output: {
       path: PATHS.build,
       filename: '[name].js',
+      // Uncomment the lien below if SPA will be served not from root level
+      // domain. It's necessary for CSS source maps to work.
+      // publicPath: '/path/to/app/',
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -46,6 +49,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
     return merge(
       common,
+      parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
       parts.purifyCSS(PATHS.app));
   }
@@ -61,6 +65,9 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
         new webpack.NamedModulesPlugin(),
       ],
     },
+    // Currently (15 Jan 2017) eval-prefixed options for sourcemaps don't work in Chrome if
+    // `debugger;` statement or dev-tools breakpoints are used.
+    parts.generateSourcemaps('eval-source-map'),
     parts.loadCSS(),
     parts.devServer({
       // Customize host/port here if needed

@@ -60,20 +60,43 @@ exports.loadCSS = function loadCSS(paths) {
           test: /\.(scss|sass|css)$/,
           // Third style-loader deals with `require` statements
           // in our JavaScript.
-          use: ['style-loader'],
+          use: [
+            {
+              loader: 'style-loader',
+            },
+          ],
           include: paths,
         },
         {
           test: /\.(scss|sass|css)$/,
           // Second css-loader will resolve `@import` and `url` statements
           // in CSS files.
-          use: ['css-loader'],
+          use: [
+            {
+              loader: 'css-loader',
+              /* TODO: Currently (15 jan 2017) sourceMaps not working with sass-loader
+               and webpack 2.
+               Uncomment `sourceMap: true` when it fixed. And add to extractCSS part too.
+               See https://github.com/jtangelder/sass-loader/issues/309 */
+              // options: {
+              //   sourceMap: true,
+              //   // TODO: Enable css-modules later.
+              // },
+            },
+          ],
           include: paths,
         },
         {
           test: /\.(scss|sass)$/,
-          // First fast-sass-loader will compile SASS to CSS
-          use: ['sass-loader'],
+          // First fast-sass-loader will compile SASS to CSS.
+          use: [
+            {
+              loader: 'sass-loader',
+              // options: {
+              //   sourceMap: true,
+              // },
+            },
+          ],
           include: paths,
         },
       ],
@@ -219,3 +242,8 @@ exports.loadFonts = function loadFonts(options) {
   };
 };
 
+exports.generateSourcemaps = function generateSourcemaps(type) {
+  return {
+    devtool: type,
+  };
+};
