@@ -247,3 +247,40 @@ exports.generateSourcemaps = function generateSourcemaps(type) {
     devtool: type,
   };
 };
+
+exports.extractBundles = function extractBundles(bundles, options) {
+  const entry = {};
+  const names = [];
+
+  bundles.forEach(({ name, entries }) => {
+    if (entries) {
+      entry[name] = entries;
+    }
+
+    names.push(name);
+  });
+
+  return {
+    // Define an entry point needed for splitting
+    entry,
+    plugins: [
+      // Extract bundles,
+      new webpack.optimize.CommonsChunkPlugin(
+        Object.assign(
+          {},
+          options,
+          {
+            names,
+            minChunks: (module) => {
+              const userRequest = module.userRequest;
+
+              // You can perform other similar checks here too.
+              // Now we check just node_modules.
+              return userRequest && userRequest.indexOf('node_modules') >= 0;
+            },
+          } // eslint-disable-line comma-dangle
+        ) // eslint-disable-line comma-dangle
+      ),
+    ],
+  };
+};

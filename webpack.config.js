@@ -21,7 +21,6 @@ const common = merge(
   {
     entry: {
       app: PATHS.app,
-      // images: PATHS.images,
     },
     output: {
       path: PATHS.build,
@@ -49,6 +48,11 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
     return merge(
       common,
+      parts.extractBundles([
+        {
+          name: 'vendor',
+        },
+      ]),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
       parts.purifyCSS(PATHS.app));
