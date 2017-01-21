@@ -45,9 +45,9 @@
     "stylelint": "^7.7.1",
     "stylelint-scss": "^1.4.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.0-rc.3",
-    "webpack-dev-server": "^2.2.0-rc.0",
-    "webpack-merge": "^2.3.1"
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0",
+    "webpack-merge": "^2.4.0"
   },
   "dependencies": {
     "purecss": "^0.6.2",

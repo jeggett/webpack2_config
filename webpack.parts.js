@@ -74,14 +74,10 @@ exports.loadCSS = function loadCSS(paths) {
           use: [
             {
               loader: 'css-loader',
-              /* TODO: Currently (15 jan 2017) sourceMaps not working with sass-loader
-               and webpack 2.
-               Uncomment `sourceMap: true` when it fixed. And add to extractCSS part too.
-               See https://github.com/jtangelder/sass-loader/issues/309 */
-              // options: {
-              //   sourceMap: true,
-              //   // TODO: Enable css-modules later.
-              // },
+              options: {
+                sourceMap: true,
+                // TODO: Enable css-modules later.
+              },
             },
           ],
           include: paths,
@@ -92,9 +88,9 @@ exports.loadCSS = function loadCSS(paths) {
           use: [
             {
               loader: 'sass-loader',
-              // options: {
-              //   sourceMap: true,
-              // },
+              options: {
+                sourceMap: true,
+              },
             },
           ],
           include: paths,
