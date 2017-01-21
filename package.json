@@ -20,6 +20,7 @@
   "author": "Alexander Zaytsev",
   "license": "ISC",
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "case-sensitive-paths-webpack-plugin": "^1.1.4",
     "css-loader": "^0.26.1",
     "eslint": "^3.13.0",
