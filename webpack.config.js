@@ -49,6 +49,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
     return merge(
       common,
+      parts.clean(PATHS.build),
       parts.extractBundles([
         {
           name: 'vendor',
@@ -56,7 +57,8 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       ]),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
-      parts.purifyCSS(PATHS.app));
+      parts.purifyCSS(PATHS.app) // eslint-disable-line
+    );
   }
 
   return merge(

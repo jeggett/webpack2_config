@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 /* eslint-enable import/no-extraneous-dependencies */
 
 exports.devServer = function devServer(options) {
@@ -298,5 +299,13 @@ exports.loadJavaScript = function loadJavaScript(paths) {
         },
       ],
     },
+  };
+};
+
+exports.clean = function clean(path) {
+  return {
+    plugin: [
+      new CleanWebpackPlugin([path]),
+    ],
   };
 };
