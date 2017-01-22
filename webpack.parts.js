@@ -111,13 +111,8 @@ exports.extractCSS = function extractCSS(paths) {
           include: paths,
           loader: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
-            loader: 'css-loader',
+            loader: ['css-loader?sourceMap', 'sass-loader?sourceMap'],
           }),
-        },
-        {
-          test: /\.(scss|sass)$/,
-          use: ['sass-loader'],
-          include: paths,
         },
       ],
     },
@@ -304,8 +299,28 @@ exports.loadJavaScript = function loadJavaScript(paths) {
 
 exports.clean = function clean(path) {
   return {
-    plugin: [
+    plugins: [
       new CleanWebpackPlugin([path]),
+    ],
+  };
+};
+
+exports.minifyJavaScript = function minifyJavaScript({ useSourceMap }) {
+  return {
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: useSourceMap,
+        compress: {
+          warnings: false,
+          drop_console: true,
+        },
+        comments: false,
+        mangle: {
+          except: ['webpackJsonp'],
+          screw_ie8: true,
+          keep_fnames: true,
+        },
+      }),
     ],
   };
 };

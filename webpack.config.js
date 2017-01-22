@@ -50,6 +50,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
     return merge(
       common,
       parts.clean(PATHS.build),
+      parts.minifyJavaScript({ useSourceMap: true }),
       parts.extractBundles([
         {
           name: 'vendor',
