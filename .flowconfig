@@ -1,0 +1,12 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/build/.*
+
+[options]
+module.file_ext=.js
+module.use_strict=true
+munge_underscores=true
+strip_root=true
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
+esproposal.decorators=ignore
+esproposal.export_star_as=enable

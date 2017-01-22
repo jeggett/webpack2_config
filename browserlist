@@ -1,0 +1,16 @@
+# Browsers that we support
+
+[production]
+last 5 Chrome versions
+last 5 Firefox versions
+last 5 Edge versions
+last 5 Opera versions
+last 5 Safari versions
+last 2 Explorer versions
+
+[development]
+last 1 Chrome versions
+last 1 Firefox versions
+last 1 Edge versions
+last 1 Opera versions
+last 1 Safari versions

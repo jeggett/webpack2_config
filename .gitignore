@@ -5,5 +5,4 @@ stats.json
 .DS_Store
 npm-debug.log
 .idea
-*.iml
 .eslintcache

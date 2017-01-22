@@ -7,8 +7,8 @@ module.exports = {
   },
   "parser": "babel-eslint",
   "parserOptions": {
-    "soourceType": "module",
-    "allowImportExportEverywhere": true,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
   "extends": "airbnb",
   "plugins": [
