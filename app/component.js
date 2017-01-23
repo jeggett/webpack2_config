@@ -28,7 +28,7 @@ const element = function element() {
 
   const btn = document.createElement('span');
   btn.className = 'pure-button fa fa-bell fa-1g';
-  btn.innerHTML = 'Hello World!';
+  btn.innerHTML = 'Hello World!!';
   btn.onclick = () => {
     // $FlowFixMe. Could not resolve name
     System.import('./lazy').then((lazy) => {

@@ -24,10 +24,6 @@ const common = merge(
     output: {
       path: PATHS.build,
       filename: '[name].js',
-      // Uncomment the line below if SPA will be served not from root level
-      // domain. It's also necessary for CSS source maps to work.
-      // TODO change to parse process.env.HOST and process.env.PORT
-      publicPath: 'http://localhost:8080/',
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -49,6 +45,20 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
     return merge(
       common,
+      {
+        output: {
+          chunkFilename: 'scripts/[chunkhash].js',
+          filename: 'scripts/[name]_[chunkhash].js',
+          // The line below in necessary if SPA will be served not from root level
+          // domain. It's also necessary for CSS source maps to work.
+          // TODO change to parse process.env.HOST and process.env.PORT
+          publicPath: '/webpack2_config/build/', // WebStorm built-in server
+        },
+
+        plugins: [
+          new webpack.HashedModuleIdsPlugin(),
+        ],
+      },
       parts.setFreeVariable(
         'process.env.NODE_ENV',
         'production' // eslint-disable-line
@@ -58,6 +68,10 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       parts.extractBundles([
         {
           name: 'vendor',
+          entries: ['react', 'redux'],
+        },
+        {
+          name: 'manifest',
         },
       ]),
       parts.generateSourcemaps('source-map'),
@@ -69,6 +83,9 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   return merge(
     common,
     {
+      output: {
+        publicPath: 'http://localhost:8080/',
+      },
       // Disable performance hints during development
       performance: {
         hints: false,

@@ -118,7 +118,7 @@ exports.extractCSS = function extractCSS(paths) {
     },
     plugins: [
       // Output extracted CSS to a file
-      new ExtractTextPlugin('[name].css'),
+      new ExtractTextPlugin('[name]_[contenthash].css'),
     ],
   };
 };
@@ -257,22 +257,7 @@ exports.extractBundles = function extractBundles(bundles, options) {
     entry,
     plugins: [
       // Extract bundles,
-      new webpack.optimize.CommonsChunkPlugin(
-        Object.assign(
-          {},
-          options,
-          {
-            names,
-            minChunks: (module) => {
-              const userRequest = module.userRequest;
-
-              // You can perform other similar checks here too.
-              // Now we check just node_modules.
-              return userRequest && userRequest.indexOf('node_modules') >= 0;
-            },
-          } // eslint-disable-line comma-dangle
-        ) // eslint-disable-line comma-dangle
-      ),
+      new webpack.optimize.CommonsChunkPlugin(Object.assign({}, options, { names })),
     ],
   };
 };
