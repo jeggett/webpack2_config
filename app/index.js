@@ -1,10 +1,10 @@
-import 'redux';
+import 'react';
 import 'purecss';
 import './main.scss';
 import '../node_modules/font-awesome/css/font-awesome.css';
-import { div } from './component';
+import { element } from './component';
 
-let demoComponent = div;
+let demoComponent = element();
 
 document.body.appendChild(demoComponent);
 

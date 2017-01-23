@@ -49,6 +49,10 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
   if (env === 'production') {
     return merge(
       common,
+      parts.setFreeVariable(
+        'process.env.NODE_ENV',
+        'production' // eslint-disable-line
+      ),
       parts.clean(PATHS.build),
       parts.minifyJavaScript({ useSourceMap: true }),
       parts.extractBundles([

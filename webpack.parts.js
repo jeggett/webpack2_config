@@ -324,3 +324,14 @@ exports.minifyJavaScript = function minifyJavaScript({ useSourceMap }) {
     ],
   };
 };
+
+exports.setFreeVariable = function setFreeVariable(key, value) {
+  const env = {};
+  env[key] = JSON.stringify(value);
+
+  return {
+    plugins: [
+      new webpack.DefinePlugin(env),
+    ],
+  };
+};
