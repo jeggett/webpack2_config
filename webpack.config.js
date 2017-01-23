@@ -23,12 +23,11 @@ const common = merge(
     },
     output: {
       path: PATHS.build,
-      filename: '[name].js',
     },
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Webpack initial',
-        // TODO add html-webpack-favicon and custom template with yandex map api
+        // TODO add html-webpack-favicon and custom template with yandex map script
         // TODO it's also possible to add webpack-dashboard later
       }),
       new CaseSensitivePathsPlugin(),
@@ -58,6 +57,10 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
         plugins: [
           new webpack.HashedModuleIdsPlugin(),
         ],
+        // TODO records.json need for aggressiveSplittingPlugin for HTTP/2 agnostic build
+        // TODO It will be used later for es-next build (without Babel) for modern browsers
+        // TODO modern or not will be determined by nginx
+        // recordsPath: 'records.json',
       },
       parts.setFreeVariable(
         'process.env.NODE_ENV',
@@ -65,15 +68,23 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       ),
       parts.clean(PATHS.build),
       parts.minifyJavaScript({ useSourceMap: true }),
-      parts.extractBundles([
-        {
-          name: 'vendor',
-          entries: ['react', 'redux'],
-        },
-        {
-          name: 'manifest',
-        },
-      ]),
+      parts.extractBundles(
+        [
+          {
+            name: 'vendor',
+            minChunks: function isVendor(module) {
+              const userRequest = module.userRequest;
+
+              // You can perform other similar checks here too.
+              // Now we check just node_modules.
+              return userRequest && userRequest.indexOf('node_modules') >= 0;
+            },
+          },
+          {
+            name: 'manifest',
+          },
+        ],
+      ),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
       parts.purifyCSS(PATHS.app) // eslint-disable-line
@@ -84,6 +95,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
     common,
     {
       output: {
+        filename: '[name].js',
         publicPath: 'http://localhost:8080/',
       },
       // Disable performance hints during development

@@ -169,14 +169,6 @@ exports.loadImages = function loadImages(paths) {
   return {
     module: {
       rules: [
-        // {
-        //   test: /\.(jpe?g|png|svg)$/,
-        //   loader: 'file-loader',
-        //   include: paths,
-        //   options: {
-        //     name: '[name].[ext]',
-        //   },
-        // },
         {
           test: /\.(jpe?g|png|svg)$/,
           loader: 'url-loader',
@@ -202,6 +194,7 @@ exports.loadImages = function loadImages(paths) {
           },
         },
         // TODO add resize-image-loader and responsive-loader for srcset
+        // TODO to support ultra high dpi displays better
       ],
     },
   };
@@ -240,27 +233,13 @@ exports.generateSourcemaps = function generateSourcemaps(type) {
   };
 };
 
-exports.extractBundles = function extractBundles(bundles, options) {
-  const entry = {};
-  const names = [];
-
-  bundles.forEach(({ name, entries }) => {
-    if (entries) {
-      entry[name] = entries;
-    }
-
-    names.push(name);
-  });
-
-  return {
-    // Define an entry point needed for splitting
-    entry,
-    plugins: [
-      // Extract bundles,
-      new webpack.optimize.CommonsChunkPlugin(Object.assign({}, options, { names })),
-    ],
-  };
-};
+exports.extractBundles = bundles => (
+  {
+    plugins: bundles.map(
+      bundle => new webpack.optimize.CommonsChunkPlugin(bundle) // eslint-disable-line
+    ),
+  }
+);
 
 exports.loadJavaScript = function loadJavaScript(paths) {
   return {
@@ -273,7 +252,7 @@ exports.loadJavaScript = function loadJavaScript(paths) {
           options: {
             // Enable caching for improved performance during development.
             // It uses default OS dir by default. If you need something more
-            // custom, pass a path to it. I.e. { cachedirectory: '<path>' }
+            // custom, pass a path to it. I.e. { cacheDirectory: '<path>' }
             cacheDirectory: true,
           },
         },
