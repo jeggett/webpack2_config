@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack-plugin');
+const PurifyCSSPlugin = require('purifycss-webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 /* eslint-enable import/no-extraneous-dependencies */
 
@@ -123,42 +123,37 @@ exports.extractCSS = function extractCSS(paths) {
   };
 };
 
-exports.purifyCSS = function purifyCSS(paths) {
-  const pathsParameter = Array.isArray(paths) ? paths : [paths];
-
+exports.purifyCSS = function purifyCSS(options) {
   return {
     plugins: [
-      new PurifyCSSPlugin({
-        // Our paths are absolute so Purify needs patching
-        // against that to work
-        basePath: '/',
-
-        // `paths` is used to point PurifyCSS to files
-        // not visible to Webpack. This expects glob
-        // patterns as we adapt here.
-        paths: pathsParameter.map(path => `${path}/*`),
-
-        purifyOptions: {
-          minify: true,
-        },
-
-        // Walk through only html files within node_modules.
-        // It picks up .js files by default.
-        resolveExtensions: ['.html'],
-      }),
+      new PurifyCSSPlugin(options),
     ],
   };
 };
 
-exports.lintCSS = function lintCSS(paths) {
+exports.lintCSS = function lintCSS(paths, rules) {
   return {
     module: {
       rules: [
         {
           test: /\.(scss|css)/,
           include: paths,
-          use: 'postcss-loader',
           enforce: 'pre',
+          use: {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('stylelint')({ // eslint-disable-line
+                  plugins: [
+                    'stylelint-scss',
+                  ],
+                  rules,
+                  ignoreFiles: 'node_modules/**/*.css',
+                }),
+              ],
+            },
+          },
         },
       ],
     },
@@ -236,7 +231,7 @@ exports.generateSourcemaps = function generateSourcemaps(type) {
 exports.extractBundles = bundles => (
   {
     plugins: bundles.map(
-      bundle => new webpack.optimize.CommonsChunkPlugin(bundle) // eslint-disable-line
+      bundle => new webpack.optimize.CommonsChunkPlugin(bundle),
     ),
   }
 );

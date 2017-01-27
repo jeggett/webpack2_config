@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const glob = require('glob'); // eslint-disable-line
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,6 +15,12 @@ const PATHS = {
   build: path.join(__dirname, 'build'),
   // The other way is use import './main.scss' from index.js
   images: path.join(__dirname, 'app', 'static', 'images'),
+};
+
+const stylelintRules = {
+  // TODO add more rules
+  'color-hex-case': 'lower',
+  'scss/operator-no-unspaced': true,
 };
 
 const common = merge(
@@ -33,11 +40,11 @@ const common = merge(
       new CaseSensitivePathsPlugin(),
     ],
   },
-  parts.lintCSS(PATHS.app),
+  parts.lintCSS(PATHS.app, stylelintRules),
   parts.lintJavaScript(PATHS.app),
   parts.loadImages(PATHS.images),
   parts.loadFonts(),
-  parts.loadJavaScript(PATHS.app) // eslint-disable-line
+  parts.loadJavaScript(PATHS.app),
 );
 
 module.exports = function config(env) { // eslint-disable-line no-unused-vars
@@ -64,7 +71,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       },
       parts.setFreeVariable(
         'process.env.NODE_ENV',
-        'production' // eslint-disable-line
+        'production',
       ),
       parts.clean(PATHS.build),
       parts.minifyJavaScript({ useSourceMap: true }),
@@ -87,7 +94,18 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       ),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
-      parts.purifyCSS(PATHS.app) // eslint-disable-line
+      parts.purifyCSS({
+        // `paths` is used to point PurifyCSS to files
+        // not visible to Webpack. This expects glob
+        // patterns as we adapt here.
+        paths: {
+          app: glob.sync(`${PATHS.app}/*`),
+        },
+        // PurifyCSS options
+        purifyOptions: {
+          minify: true, // Uses clean-css internally
+        },
+      }),
     );
   }
 
@@ -114,5 +132,6 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
       // Customize host/port here if needed
       host: process.env.HOST,
       port: process.env.PORT,
-    }));
+    }),
+  );
 };
