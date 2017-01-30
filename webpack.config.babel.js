@@ -4,6 +4,7 @@ const glob = require('glob'); // eslint-disable-line
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackTemplate = require('html-webpack-template');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const merge = require('webpack-merge');
 /* eslint-enable import/no-extraneous-dependencies */
@@ -33,7 +34,11 @@ const common = merge(
     },
     plugins: [
       new HtmlWebpackPlugin({
+        template: HtmlWebpackTemplate,
         title: 'Webpack initial',
+        appMountId: 'app', // Generate #app mount point
+        mobile: true,
+        inject: false, // html-webpack-template requires this to work
         // TODO add html-webpack-favicon and custom template with yandex map script
         // TODO it's also possible to add webpack-dashboard later
       }),
@@ -80,11 +85,11 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
           {
             name: 'vendor',
             minChunks: function isVendor(module) {
-              const userRequest = module.userRequest;
+              const context = module.context;
 
               // You can perform other similar checks here too.
               // Now we check just node_modules.
-              return userRequest && userRequest.indexOf('node_modules') >= 0;
+              return context && context.indexOf('node_modules') >= 0;
             },
           },
           {

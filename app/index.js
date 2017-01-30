@@ -1,4 +1,5 @@
-import 'react';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 import 'purecss';
 import './main.scss';
 import '../node_modules/font-awesome/css/font-awesome.css';

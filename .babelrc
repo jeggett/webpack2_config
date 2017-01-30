@@ -4,13 +4,14 @@
         "syntax-dynamic-import"
     ],
     "presets": [
-       [
-           "env",
-           {
-               // We handle them by Webpack
-               "modules": false,
-               "useBuiltIns": true
-           }
-       ]
+        [
+            "env",
+            {
+                // We handle them by Webpack
+                "modules": false,
+                "useBuiltIns": true
+            }
+        ],
+        "react"
     ]
 }
