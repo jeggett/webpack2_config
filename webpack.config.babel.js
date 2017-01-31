@@ -52,7 +52,7 @@ const common = merge(
   parts.loadJavaScript(PATHS.app),
 );
 
-module.exports = function config(env) { // eslint-disable-line no-unused-vars
+module.exports = function config(env) {
   if (env === 'production') {
     return merge(
       common,
@@ -63,6 +63,7 @@ module.exports = function config(env) { // eslint-disable-line no-unused-vars
           // The line below in necessary if SPA will be served not from root level
           // domain. It's also necessary for CSS source maps to work.
           // TODO change to parse process.env.HOST and process.env.PORT
+          // If hosted on example.com/app/, change line blow to '/app/'
           publicPath: '/webpack2_config/build/', // WebStorm built-in server
         },
 
