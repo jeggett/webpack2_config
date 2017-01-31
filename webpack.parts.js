@@ -109,7 +109,7 @@ exports.extractCSS = function extractCSS(paths) {
         {
           test: /\.(scss|sass|css)$/,
           include: paths,
-          loader: ExtractTextPlugin.extract({
+          use: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
             loader: ['css-loader?sourceMap', 'sass-loader?sourceMap'],
           }),
