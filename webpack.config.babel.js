@@ -34,11 +34,23 @@ const common = merge(
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: HtmlWebpackTemplate,
         title: 'Webpack initial',
+        template: HtmlWebpackTemplate,
+        inject: false, // html-webpack-template requires this to work
         appMountId: 'app', // Generate #app mount point
         mobile: true,
-        inject: false, // html-webpack-template requires this to work
+        meta: [
+          {
+            name: 'description',
+            content: 'iDwell',
+          },
+        ],
+        scripts: [
+          {
+            src: 'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
+            type: 'text/javascript',
+          },
+        ],
         // TODO add html-webpack-favicon and custom template with yandex map script
         // TODO it's also possible to add webpack-dashboard later
       }),
