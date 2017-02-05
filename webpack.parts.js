@@ -101,17 +101,31 @@ exports.loadCSS = function loadCSS(paths) {
   };
 };
 
-exports.extractCSS = function extractCSS(paths) {
+exports.autoprefix = function autoprefix() {
+  return {
+    loader: 'postcss-loader',
+    options: {
+      plugins: function autoprefixer() {
+        return [
+          require('autoprefixer'), // eslint-disable-line
+        ];
+      },
+    },
+  };
+};
+
+exports.extractCSS = function extractCSS({ include, exclude, use }) {
   return {
     module: {
       rules: [
         // Extract CSS during build
         {
           test: /\.(scss|sass|css)$/,
-          include: paths,
+          include,
+          exclude,
           use: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: ['css-loader?sourceMap', 'sass-loader?sourceMap'],
+            use,
+            fallback: 'style-loader',
           }),
         },
       ],
@@ -160,33 +174,33 @@ exports.lintCSS = function lintCSS(paths, rules) {
   };
 };
 
-exports.loadImages = function loadImages(paths) {
+exports.loadImages = function loadImages({ include, exclude, options }) {
   return {
     module: {
       rules: [
         {
           test: /\.(jpe?g|png|svg)$/,
-          loader: 'url-loader',
-          include: paths,
-          options: {
-            limit: 3000,
-            name: './images/[name][hash].[ext]',
-          },
-        },
-        {
-          test: /\.(jpe?g|png|svg)$/,
-          loader: 'image-webpack-loader',
-          include: paths,
-          // TODO configure rules later
-          options: {
-            progressive: true,
-            optimizationLevel: 8,
-            interlaced: false,
-            pngquant: {
-              quality: '65-90',
-              speed: 3,
+          include,
+          exclude,
+          use: [
+            {
+              loader: 'url-loader',
+              options,
             },
-          },
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                // TODO configure rules later
+                progressive: true,
+                optimizationLevel: 8,
+                interlaced: false,
+                pngquant: {
+                  quality: '65-90',
+                  speed: 3,
+                },
+              },
+            },
+          ],
         },
         // TODO add resize-image-loader and responsive-loader for srcset
         // TODO to support ultra high dpi displays better

@@ -1,12 +1,13 @@
 // @flow
 // $FlowFixMe cant find module babel-polyfill
 import 'babel-polyfill'; // eslint-disable-line
-import src from './static/images/images.png';
 
 const element = function element() {
   const img = document.createElement('img');
+  import src from './static/images/images.png'; // eslint-disable-line
   img.src = src;
 
+  // ============ test async await ==============
   function resolveAfter2Seconds(x) {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -25,6 +26,11 @@ const element = function element() {
   add1(10).then((v) => {
     console.log(v); // eslint-disable-line no-console
   });
+  // ============ test async await ==============
+
+  // ============ test object rest/spread ==============
+
+  // ============ test object rest/spread ==============
 
   const btn = document.createElement('span');
   btn.className = 'pure-button fa fa-bell fa-1g';
@@ -38,9 +44,13 @@ const element = function element() {
     });
   };
 
+  const link = document.createElement('a');
+  link.innerHTML = 'Link';
+
   const div = document.createElement('div');
   div.appendChild(img);
   div.appendChild(btn);
+  div.appendChild(link);
 
   return div;
 };

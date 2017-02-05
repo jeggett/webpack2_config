@@ -1,0 +1,33 @@
+body {
+    // Demonstrate that autoprefixer works
+    display: flex;
+
+    background: cornsilk;
+
+    // Demonstrate that images works
+    background-image: url('../images/water.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px auto;
+}
+
+@import
+  'utils/variables';
+
+@import
+  'base/base';
+
+// Some comment
+a {
+    // Demonstrate that stylelint for SCSS works
+    // report space before and after `+` operator
+    width: 10+1;
+
+    cursor: pointer;
+
+    color: $a-color;
+
+    &:hover {
+        color: $a-hover-color;
+    }
+}

@@ -59,7 +59,13 @@ const common = merge(
   },
   parts.lintCSS(PATHS.app, stylelintRules),
   parts.lintJavaScript(PATHS.app),
-  parts.loadImages(PATHS.images),
+  parts.loadImages({
+    include: PATHS.images,
+    options: {
+      limit: 3000,
+      name: './images/[name][hash].[ext]',
+    },
+  }),
   parts.loadFonts(),
   parts.loadJavaScript(PATHS.app),
 );
@@ -111,7 +117,13 @@ module.exports = function config(env) {
         ],
       ),
       parts.generateSourcemaps('source-map'),
-      parts.extractCSS(),
+      parts.extractCSS({
+        use: [
+          'css-loader?sourceMap',
+          parts.autoprefix(),
+          'sass-loader?sourceMap',
+        ],
+      }),
       parts.purifyCSS({
         // `paths` is used to point PurifyCSS to files
         // not visible to Webpack. This expects glob

@@ -3,17 +3,19 @@ module.exports = {
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
   },
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
-    "allowImportExportEverywhere": true
+    "allowImportExportEverywhere": true,
   },
   "extends": "airbnb",
   "plugins": [
     "react",
     "jsx-a11y",
-    "import"
-  ]
+    "import",
+  ],
+  "rules": {
+  },
 };
