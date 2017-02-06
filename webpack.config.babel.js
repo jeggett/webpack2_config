@@ -26,9 +26,6 @@ const stylelintRules = {
 
 const common = merge(
   {
-    entry: {
-      app: PATHS.app,
-    },
     output: {
       path: PATHS.build,
     },
@@ -71,10 +68,16 @@ const common = merge(
 );
 
 module.exports = function config(env) {
+  // So Babel remove hot-loader from production bundle
+  process.env.BABEL_ENV = env;
+
   if (env === 'production') {
     return merge(
       common,
       {
+        entry: {
+          app: PATHS.app,
+        },
         output: {
           chunkFilename: 'scripts/[chunkhash].js',
           filename: 'scripts/[name]_[chunkhash].js',
@@ -124,24 +127,27 @@ module.exports = function config(env) {
           'sass-loader?sourceMap',
         ],
       }),
-      parts.purifyCSS({
-        // `paths` is used to point PurifyCSS to files
-        // not visible to Webpack. This expects glob
-        // patterns as we adapt here.
-        paths: {
-          app: glob.sync(`${PATHS.app}/*`),
-        },
-        // PurifyCSS options
-        purifyOptions: {
-          minify: true, // Uses clean-css internally
-        },
-      }),
+      // parts.purifyCSS({
+      //   // `paths` is used to point PurifyCSS to files
+      //   // not visible to Webpack. This expects glob
+      //   // patterns as we adapt here.
+      //   paths: {
+      //     app: glob.sync(`${PATHS.app}/*`),
+      //   },
+      //   // PurifyCSS options
+      //   purifyOptions: {
+      //     minify: true, // Uses clean-css internally
+      //   },
+      // }),
     );
   }
 
   return merge(
     common,
     {
+      entry: {
+        app: ['react-hot-loader/patch', PATHS.app],
+      },
       output: {
         filename: '[name].js',
         publicPath: 'http://localhost:8080/',
@@ -163,5 +169,9 @@ module.exports = function config(env) {
       host: process.env.HOST,
       port: process.env.PORT,
     }),
+    parts.setFreeVariable(
+      'process.env.NODE_ENV',
+      'development',
+    ),
   );
 };

@@ -9,6 +9,9 @@ module.exports = {
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": true,
+    "ecmaFeatures": {
+      "jsx": true,
+    },
   },
   "extends": "airbnb",
   "plugins": [
@@ -17,5 +20,6 @@ module.exports = {
     "import",
   ],
   "rules": {
+    "react/jsx-filename-extension": 0,
   },
 };
